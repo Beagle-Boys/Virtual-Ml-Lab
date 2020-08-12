@@ -1,0 +1,31 @@
+.toolbar {
+  --min-height: 11.2vh;
+  border-color: transparent;
+  --border-color: transparent;
+}
+.menuIcon {
+  color: #000000;
+}
+.button {
+  margin-left: 20px !important;
+  font-family: Poppins;
+  font-weight: 600 !important;
+}
+.rightButton {
+  margin-right: 24px;
+}
+.text{
+  font-size: 18px;
+  font-weight: 400;
+}
+.underline {
+  text-decoration: underline;
+}
+
+.button > .text {
+  color: black;
+}
+
+.button > ion-router-link {
+  color: white;
+}

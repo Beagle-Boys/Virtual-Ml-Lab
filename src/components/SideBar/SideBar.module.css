@@ -1,0 +1,22 @@
+.menu {
+  --width: 328px;
+}
+.header {
+}
+.toolbar {
+}
+.title {
+  font-family: Poppins;
+  color: #1967d2;
+  font-weight: 600;
+  font-size: x-large;
+}
+.item {
+  --background-hover: #4085ff;
+  --color-hover: #1967d2;
+  font-family: Poppins;
+}
+.icon {
+  margin-right: 12px;
+  color: currentColor;
+}
