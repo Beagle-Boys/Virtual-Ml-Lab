@@ -16,6 +16,7 @@ interface Props {
   background?: string;
   title?: string;
   menu?: boolean;
+  extras?: boolean;
 }
 
 class AppBar extends React.Component<Props, {}> {
@@ -37,7 +38,7 @@ class AppBar extends React.Component<Props, {}> {
               </IonMenuToggle>
             ) : null}
           </IonButtons>
-          <IonButtons className={styles.rightButton} slot="primary">
+          {this.props.extras?<IonButtons className={styles.rightButton} slot="primary">
             <IonButton className={styles.button}>
               <IonRouterLink
                 className={`${styles.text} ${styles.underline}`}
@@ -55,7 +56,7 @@ class AppBar extends React.Component<Props, {}> {
             <IonButton fill="solid" className={styles.button}>
               <IonRouterLink href="/train">Get Started</IonRouterLink>
             </IonButton>
-          </IonButtons>
+          </IonButtons>:null}
         </IonToolbar>
       </IonHeader>
     );
