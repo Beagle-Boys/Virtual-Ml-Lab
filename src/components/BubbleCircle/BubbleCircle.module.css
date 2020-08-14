@@ -1,0 +1,23 @@
+.bubbleCon {
+  display: flex;
+  height: 300px;
+  width: 300px;
+  background-color: cornflowerblue;
+  color: black;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  box-sizing: border-box;
+  margin-top: 5vh;
+  transition-property: transform scale box-shadow;
+  transition-duration: 0.7s;
+  transition-timing-function: ease-out;
+}
+.bubbleCon:hover {
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(-10px) scale(1.1);
+}
+.levelInfo {
+  height: fit-content;
+  width: fit-content;
+  margin: auto;
+}

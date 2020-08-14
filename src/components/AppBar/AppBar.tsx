@@ -15,6 +15,7 @@ import { menuOutline } from "ionicons/icons";
 interface Props {
   background?: string;
   title?: string;
+  menu?: boolean;
 }
 
 class AppBar extends React.Component<Props, {}> {
@@ -24,15 +25,17 @@ class AppBar extends React.Component<Props, {}> {
         <IonToolbar className={styles.toolbar} mode="ios">
           {this.props.title ? <IonTitle>{this.props.title}</IonTitle> : null}
           <IonButtons slot="secondary">
-            <IonMenuToggle>
-              <IonButton className={styles.button}>
-                <IonIcon
-                  className={styles.menuIcon}
-                  slot="icon-only"
-                  icon={menuOutline}
-                />
-              </IonButton>
-            </IonMenuToggle>
+            {this.props.menu ? (
+              <IonMenuToggle>
+                <IonButton className={styles.button}>
+                  <IonIcon
+                    className={styles.menuIcon}
+                    slot="icon-only"
+                    icon={menuOutline}
+                  />
+                </IonButton>
+              </IonMenuToggle>
+            ) : null}
           </IonButtons>
           <IonButtons className={styles.rightButton} slot="primary">
             <IonButton className={styles.button}>
