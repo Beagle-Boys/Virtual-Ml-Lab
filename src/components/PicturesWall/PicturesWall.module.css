@@ -1,0 +1,9 @@
+.clearfix {
+  max-height: 208px;
+  overflow-y: auto;
+}
+
+.upload {
+}
+.upload > * {
+}

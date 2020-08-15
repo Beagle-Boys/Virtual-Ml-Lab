@@ -19,9 +19,13 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
+import Workspace from "./pages/Workspace/Workspace";
 
 /* Theme variables */
 //import './theme/variables.css';
+
+/* Antd css */
+import 'antd/dist/antd.css';
 
 class App extends React.Component {
   render() {
@@ -29,8 +33,9 @@ class App extends React.Component {
       <IonApp>
         <IonReactRouter>
           <IonRouterOutlet>
-            <Route path="/home" component={Home} exact={true} />
+            <Route path="/home" component={Home} exact />
             <Route exact path="/" render={() => <Redirect to="/home" />} />
+            <Route path="/train" exact component={Workspace} />
           </IonRouterOutlet>
         </IonReactRouter>
       </IonApp>
