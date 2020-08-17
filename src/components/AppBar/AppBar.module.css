@@ -4,6 +4,10 @@
   --border-color: transparent;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16);
 }
+.title{
+  font-family: 'Roboto Condensed', sans-serif;
+  font-size: 3.6rem;
+}
 .menuIcon {
   color: #000000;
 }

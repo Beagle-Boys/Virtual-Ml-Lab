@@ -24,7 +24,7 @@ class AppBar extends React.Component<Props, {}> {
     return (
       <IonHeader style={{ backgroundColor: this.props.background }} mode="ios">
         <IonToolbar className={styles.toolbar} mode="ios">
-          {this.props.title ? <IonTitle>{this.props.title}</IonTitle> : null}
+          {this.props.title ? <IonTitle className={styles.title}>{this.props.title}</IonTitle> : null}
           <IonButtons slot="secondary">
             {this.props.menu ? (
               <IonMenuToggle>
