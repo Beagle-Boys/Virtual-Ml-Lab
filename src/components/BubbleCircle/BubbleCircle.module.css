@@ -14,11 +14,17 @@
   transition-timing-function: ease-out;
 }
 .bubbleCon:hover {
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.3);
   transform: translateY(-10px) scale(1.1);
+  background-color: rgb(125, 165, 238);
 }
 .levelInfo {
   height: fit-content;
   width: fit-content;
   margin: auto;
+  font-size: 2.5rem;
+}
+img{
+  height: 150px;
+  width: 150px;
 }

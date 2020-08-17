@@ -10,3 +10,9 @@
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
+.lvlInfo{
+  position: relative;
+  top: 10vh;
+  font-size: 3.7rem;
+  text-align: center;
+}
