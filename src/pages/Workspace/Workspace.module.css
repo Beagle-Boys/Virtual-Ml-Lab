@@ -4,3 +4,23 @@
 .workinp {
   margin-top: 30px !important;
 }
+.paper {
+  background-color: transparent !important;
+}
+.cont_flex {
+  flex-direction: row;
+  display: flex;
+}
+.inpFlex {
+  flex-direction: column;
+  width: 620px;
+  display: flex;
+}
+.processFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.outputFlex {
+  display: flex;
+}

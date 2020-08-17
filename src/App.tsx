@@ -3,6 +3,7 @@ import { Redirect, Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import Home from "./pages/Home/Home";
+import Workspace from "./pages/Workspace/Workspace";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -19,13 +20,13 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
-import Workspace from "./pages/Workspace/Workspace";
 
 /* Theme variables */
 //import './theme/variables.css';
 
 /* Antd css */
 import 'antd/dist/antd.css';
+import "./theme/custom_ant_variations.css";
 
 class App extends React.Component {
   render() {

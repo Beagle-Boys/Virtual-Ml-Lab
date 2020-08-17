@@ -13,6 +13,10 @@ interface Props {
   className?: string;
   class: ImageInputClass;
   onChange?: (val: ImageInputClass) => void;
+  optionClicked?: (
+    option: "delete" | "disable" | "remove" | "download" | "save",
+    classObject: ImageInputClass
+  ) => void;
 }
 
 const transformFile: (file: File) => Promise<Blob | null> = (file: File) => {
@@ -62,19 +66,57 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
   };
   dropdown = (
     <>
-      <IonItem lines="none" button>
+      <IonItem
+        onClick={() => {
+          if (this.props.optionClicked)
+            this.props.optionClicked("delete", this.state.class);
+        }}
+        lines="none"
+        button
+      >
         Delete Class
       </IonItem>
-      <IonItem lines="none" button>
+      <IonItem
+        onClick={() => {
+          if (this.props.optionClicked)
+            this.props.optionClicked("disable", this.state.class);
+        }}
+        lines="none"
+        button
+      >
         Disable Class
       </IonItem>
-      <IonItem lines="none" button disabled>
+      <IonItem
+        onClick={() => {
+          if (this.props.optionClicked)
+            this.props.optionClicked("remove", this.state.class);
+        }}
+        lines="none"
+        button
+        disabled
+      >
         Remove All Samples
       </IonItem>
-      <IonItem lines="none" button disabled>
+      <IonItem
+        onClick={() => {
+          if (this.props.optionClicked)
+            this.props.optionClicked("download", this.state.class);
+        }}
+        lines="none"
+        button
+        disabled
+      >
         Download Samples
       </IonItem>
-      <IonItem lines="none" button disabled>
+      <IonItem
+        onClick={() => {
+          if (this.props.optionClicked)
+            this.props.optionClicked("save", this.state.class);
+        }}
+        lines="none"
+        button
+        disabled
+      >
         Save Samples to Drive
       </IonItem>
     </>

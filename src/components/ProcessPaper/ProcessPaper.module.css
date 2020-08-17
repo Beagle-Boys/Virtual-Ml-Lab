@@ -1,0 +1,138 @@
+.paper {
+  width: 220px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  background-color: #fff;
+  font-family: Poppins;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  padding: 0px !important;
+}
+.button {
+  --background-hover: #d2e3fc;
+  --background-activated: #aecbfa;
+  --color: #1967d2;
+  --color-focused: #8ab4f8;
+  --background: #e8f0fe;
+  width: 100%;
+  font-family: Poppins, sans-serif;
+}
+.button:disabled {
+  --color: #5f6368;
+  --background: #f1f3f4;
+}
+.label {
+  font-size: 18px;
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+.section {
+  display: block;
+  position: relative;
+  padding: 18px;
+  border-bottom: 1px solid #dadce0;
+}
+.inputNumber {
+  width: 54px !important;
+}
+.inputholder {
+  display: inline-block;
+}
+.inputholder input[type="number"] {
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 42px;
+  padding: 4px 6px;
+  margin: 0 5px;
+  border: 0;
+  outline: 0;
+  border-radius: 3px;
+  background-color: #e8f0fe;
+  color: #1967d2;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  font-weight: 500;
+  font-family: Poppins, sans-serif;
+}
+.settingbox:first-child {
+  border: 0;
+}
+.settingbox:first-child {
+  padding-top: 0px;
+}
+.settingbox {
+  font-size: 14px;
+  border-top: 1px solid #eaeaea;
+  padding: 18px;
+}
+.settingrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tooltiptitle {
+  font-weight: 600;
+  padding-bottom: 8px;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.tooltiptext {
+  line-height: 1.45em;
+  font-size: 14px;
+  font-weight: 500px;
+}
+.inputholder select {
+  position: relative;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 62px;
+  padding: 4px 8px;
+  margin: 0 5px;
+  border: 0;
+  outline: 0;
+  background-color: #e8f0fe;
+  color: #1967d2;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  font-weight: 500;
+  font-family: Poppins;
+  background-image: url("data:image/svg+xml,%3Csvg width=19 height=24 viewBox=0 0 19 24 fill=none xmlns=http://www.w3.org/2000/svg%3E%3Cpath d=M0 0H17C18.1046 0 19 0.895431 19 2V22C19 23.1046 18.1046 24 17 24H0V0Z fill=%231967D2/%3E%3Cpath d=M9.5 15L5.60289 9.75L13.3971 9.75L9.5 15Z fill=%23FFFFFF/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat, repeat;
+  background-position: right 0 top 50%, 0 0;
+  background-size: 1.75em auto, 100%;
+}
+.topborder {
+  border-bottom: 0;
+  border-top: 1px solid #dadce0;
+}
+.section[role="button"] {
+  transition: 0.2s all ease-out;
+  outline: 0;
+}
+.suboption {
+  font-size: 14px;
+  color: #9aa0a6;
+  width: 100%;
+  display: inline-block;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.suboptioniconwrap {
+  position: absolute;
+  right: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 18px;
+  width: 18px;
+}
+.suboptionicon {
+  height: 100%;
+  width: 100%;
+}
