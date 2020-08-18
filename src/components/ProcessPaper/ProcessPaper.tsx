@@ -5,12 +5,14 @@ import { IonButton, IonIcon } from "@ionic/react";
 import { Collapse, Tooltip } from "antd";
 import { helpCircleOutline } from "ionicons/icons";
 
-interface Props {}
+interface Props {
+  reff?: React.RefObject<HTMLDivElement>;
+}
 
 class ProcessPaper extends React.Component<Props, {}> {
   render() {
     return (
-      <Paper className={styles.paper}>
+      <Paper reff={this.props.reff} className={styles.paper}>
         <div className={styles.section}>
           <div className={styles.label}>Training</div>
           <IonButton className={styles.button}>Train Model</IonButton>
