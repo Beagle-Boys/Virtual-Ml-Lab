@@ -1,3 +1,6 @@
+# **VIRTUAL ML LAB**
+ ![Node.js CI](https://github.com/GrayHat12/Virtual-Ml-Lab/workflows/Node.js%20CI/badge.svg)
+
 # TESTING
 
 Steps :
