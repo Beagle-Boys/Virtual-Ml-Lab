@@ -1,0 +1,41 @@
+.card {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  box-sizing: border-box;
+  width: 590px !important;
+  margin-top: 30px !important;
+}
+.name {
+  font-size: 18px;
+  font-weight: 500;
+  font-family: Poppins;
+}
+.name:hover {
+  color: #174ea6;
+}
+.name:focus {
+  border-color: #8ab4f8;
+  background-color: #e8f0fe;
+}
+.section {
+  padding: 18px;
+  font-size: 15px;
+  color: #3c4043;
+  font-weight: 500;
+}
+.images {
+  padding-top: 13px;
+  padding-bottom: 5px;
+  padding-right: 0;
+  width: 100%;
+  max-height: 208px;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+}
+.button {
+  display: inline-block;
+  flex-shrink: 0;
+}

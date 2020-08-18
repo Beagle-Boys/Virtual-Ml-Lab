@@ -1,0 +1,44 @@
+.content {
+  --background: #e8eaed;
+}
+.workinp {
+  margin-top: 30px !important;
+}
+.paper {
+  background-color: transparent !important;
+}
+.cont_flex {
+  flex-direction: row;
+  display: flex;
+  overflow-x: scroll;
+}
+.inpFlex {
+  flex-direction: column;
+  width: 620px;
+  display: flex;
+}
+.processFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 270px;
+  margin-right: 20px;
+}
+.outputFlex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 350px;
+  margin-right: 50px;
+}
+.svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.line {
+  stroke-width: 2px;
+  stroke: #bdc1c6;
+}
