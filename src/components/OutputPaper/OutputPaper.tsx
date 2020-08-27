@@ -4,9 +4,16 @@ import Paper from "../Paper/Paper";
 
 interface Props {
   reff?: React.RefObject<HTMLDivElement>;
+  onRendered?: () => void;
 }
 
 class OutputPaper extends React.Component<Props, {}> {
+  componentDidUpdate() {
+    if (this.props.onRendered) return this.props.onRendered();
+  }
+  componentDidMount() {
+    if (this.props.onRendered) return this.props.onRendered();
+  }
   render() {
     return (
       <Paper reff={this.props.reff} className={styles.paper}>

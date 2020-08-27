@@ -4,18 +4,38 @@ import Paper from "../Paper/Paper";
 import { IonButton, IonIcon } from "@ionic/react";
 import { Collapse, Tooltip } from "antd";
 import { helpCircleOutline } from "ionicons/icons";
+import NeuralNetwork from "../../libs/NeuralNetwork";
+import ImageInputClass from "../../libs/ImageInputClass";
 
 interface Props {
   reff?: React.RefObject<HTMLDivElement>;
+  onRendered?: () => void;
+  neuralNetwork: NeuralNetwork;
+  imageClasses: ImageInputClass[];
 }
 
 class ProcessPaper extends React.Component<Props, {}> {
+  componentDidUpdate() {
+    if (this.props.onRendered) return this.props.onRendered();
+  }
+  componentDidMount() {
+    if (this.props.onRendered) return this.props.onRendered();
+  }
+  onTrain = () => {
+    this.props.neuralNetwork.imageClasses = this.props.imageClasses;
+    this.props.neuralNetwork
+      .train()
+      .then(console.log)
+      .catch(console.error);
+  };
   render() {
     return (
       <Paper reff={this.props.reff} className={styles.paper}>
         <div className={styles.section}>
           <div className={styles.label}>Training</div>
-          <IonButton className={styles.button}>Train Model</IonButton>
+          <IonButton onClick={this.onTrain} className={styles.button}>
+            Train Model
+          </IonButton>
         </div>
         <Collapse expandIconPosition="right">
           <Collapse.Panel header="Advanced" key={1}>
@@ -29,6 +49,7 @@ class ProcessPaper extends React.Component<Props, {}> {
                       min="1"
                       maxLength={4}
                       defaultValue={50}
+                      value={this.props.neuralNetwork.modelfitOptions.epochs}
                       className={styles.inputNumber}
                       max="9999"
                     />
@@ -69,15 +90,17 @@ class ProcessPaper extends React.Component<Props, {}> {
                 <span>
                   Batch Size:
                   <div className={styles.inputholder}>
-                    <select>
-                      <option value="16" selected>
-                        16
-                      </option>
-                      <option value="32">32</option>
-                      <option value="64">64</option>
-                      <option value="128">128</option>
-                      <option value="256">256</option>
-                      <option value="512">512</option>
+                    <select
+                      defaultValue={
+                        this.props.neuralNetwork.layerOptions.batchSize
+                      }
+                    >
+                      <option value={16}>16</option>
+                      <option value={32}>32</option>
+                      <option value={64}>64</option>
+                      <option value={128}>128</option>
+                      <option value={256}>256</option>
+                      <option value={512}>512</option>
                     </select>
                   </div>
                 </span>

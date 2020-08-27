@@ -9,23 +9,40 @@ import AddClassButton from "../../components/AddClassButton/AddClassButton";
 import Paper from "../../components/Paper/Paper";
 import ProcessPaper from "../../components/ProcessPaper/ProcessPaper";
 import OutputPaper from "../../components/OutputPaper/OutputPaper";
+import NeuralNetwork from "../../libs/NeuralNetwork";
 
 interface Props {}
 
 class Workspace extends React.Component<Props, {}> {
   state = {
-    classes: [new ImageInputClass(1), new ImageInputClass(2)],
+    classes: [
+      {
+        backend: new ImageInputClass(1),
+        frontend: React.createRef<WorkspaceInputCard>(),
+      },
+      {
+        backend: new ImageInputClass(2),
+        frontend: React.createRef<WorkspaceInputCard>(),
+      },
+    ],
+    neuralNetwork: new NeuralNetwork(),
   };
+  componentDidMount() {
+    this.update();
+  }
+  componentDidUpdate() {
+    this.update();
+  }
   //needs update
   //am planning to create an update function that'll be called when the children are rendered
-  componentDidMount() {
+  update = () => {
     if (
       !this.processPaper.current ||
       !this.outputPaper.current ||
       !this.processToOutput.current
     )
       return;
-    console.log(this.processPaper.current);
+    //console.log(this.processPaper.current);
     let x1 =
       this.processPaper.current.offsetLeft +
       this.processPaper.current.clientWidth / 2;
@@ -42,7 +59,8 @@ class Workspace extends React.Component<Props, {}> {
     this.processToOutput.current.setAttribute("x2", `${x2}`);
     this.processToOutput.current.setAttribute("y1", `${y1}`);
     this.processToOutput.current.setAttribute("y2", `${y2}`);
-  }
+    //console.log(x1,x2,y1,y2);
+  };
   processToOutput = React.createRef<SVGLineElement>();
   processPaper = React.createRef<HTMLDivElement>();
   outputPaper = React.createRef<HTMLDivElement>();
@@ -59,6 +77,8 @@ class Workspace extends React.Component<Props, {}> {
             <div className={styles.inpFlex}>
               {this.state.classes.map((v, i) => (
                 <WorkspaceInputCard
+                  onRendered={this.update}
+                  ref={v.frontend}
                   optionClicked={(option, classObj) => {
                     if (option === "delete") {
                       let list = this.state.classes.filter(
@@ -67,8 +87,13 @@ class Workspace extends React.Component<Props, {}> {
                       return this.setState({ classes: list });
                     }
                   }}
+                  onChange={(object) => {
+                    // eslint-disable-next-line react/no-direct-mutation-state
+                    this.state.classes[i].backend = object;
+                    this.setState({ classes: this.state.classes });
+                  }}
                   key={i}
-                  class={v}
+                  class={v.backend}
                 />
               ))}
               <Paper className={styles.paper}>
@@ -85,10 +110,15 @@ class Workspace extends React.Component<Props, {}> {
               </Paper>
             </div>
             <div className={styles.processFlex}>
-              <ProcessPaper reff={this.processPaper} />
+              <ProcessPaper
+                neuralNetwork={this.state.neuralNetwork}
+                imageClasses={this.state.classes.map((v) => v.backend)}
+                onRendered={this.update}
+                reff={this.processPaper}
+              />
             </div>
             <div className={styles.outputFlex}>
-              <OutputPaper reff={this.outputPaper} />
+              <OutputPaper onRendered={this.update} reff={this.outputPaper} />
             </div>
           </div>
         </IonContent>

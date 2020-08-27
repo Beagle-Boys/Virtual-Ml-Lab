@@ -17,6 +17,7 @@ interface Props {
     option: "delete" | "disable" | "remove" | "download" | "save",
     classObject: ImageInputClass
   ) => void;
+  onRendered?: () => void;
 }
 
 const transformFile: (file: File) => Promise<Blob | null> = (file: File) => {
@@ -54,9 +55,8 @@ const toBase64: (
   });
 
 class WorkspaceInputCard extends React.Component<Props, {}> {
-  state: { class: ImageInputClass; images: UploadFile[] } = {
+  state: { class: ImageInputClass } = {
     class: this.props.class,
-    images: [],
   };
   onClassNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     let tclass = this.state.class;
@@ -123,7 +123,7 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
   );
   onAddImages = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let files = event.target.files;
-    let tfile = this.state.images;
+    let tfile = this.state.class.images;
     for (let i = 0; files && i < files?.length; i++) {
       let tform = await transformFile(files[i]);
       if (!tform) continue;
@@ -137,8 +137,14 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
         type: files[i].type,
       };
       tfile.push(file);
-      this.setState({ images: tfile });
+      this.state.class.images = tfile;
+      if (this.props.onChange) return this.props.onChange(this.state.class);
+      this.setState({ class: this.state.class });
     }
+  };
+
+  componentDidMount = () => {
+    if (this.props.onRendered) return this.props.onRendered();
   };
 
   imageInputRef = React.createRef<HTMLInputElement>();
@@ -178,10 +184,10 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
             <PicturesWall
               onChange={(uid) => {
                 this.setState({
-                  images: this.state.images.filter((img) => img.uid !== uid),
+                  images: this.state.class.images.filter((img) => img.uid !== uid),
                 });
               }}
-              files={this.state.images}
+              files={this.state.class.images}
             />
           </div>
         </div>
