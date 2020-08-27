@@ -7,8 +7,9 @@
     font-family: 'Prata', serif;
 }
 .startBtn{
-    color: #ffffff;
+    --color: #ffffff;
     background-color: #5EACF4;
+    --background: #5EACF4;
     width: fit-content;
     box-sizing: border-box;
     padding: 1rem;
@@ -18,15 +19,22 @@
     position: relative;
     left: 5vw;
     top: 2vh;
+    user-select: none;
+    cursor: pointer;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+    transition: background-color var(--background) 0.2s ease-out;
+}
+.startBtn:hover{
+    background-color: #4f94d4;
+    --background: #4f94d4;
 }
 .svgNew{
-    position: relative;
-    top: 0.5rem;
     margin-left: 10px;
 }
 .newBtnText{
+    position: relative;
     margin-left: 10px;
+    bottom: 3px;
 }
 .border{
     margin-top: 7vh;
@@ -38,6 +46,7 @@
     margin-left: 5vw;
     font-size: 2.2rem;
     font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
 }
 .presetsCon{
     margin: 0 auto;
@@ -46,15 +55,4 @@
     width: 80%;
     flex-direction: row;
     justify-content: space-around;
-}
-.preset{
-    flex-wrap: wrap;
-    height: 300px;
-    width: 300px;
-    border-radius: 40px;
-    background-color: white;
-    border: 1px solid black;
-}
-.preset:hover{
-    border: 2px solid #5EACF4;
 }

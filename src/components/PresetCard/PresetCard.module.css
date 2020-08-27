@@ -1,0 +1,15 @@
+.preset{
+    display: flex;
+    height: 15vw;
+    width: 15vw;
+    border-radius: 40px;
+    background-color: white;
+    border: 1px solid black;
+}
+.preset:hover{
+    border: 2px solid #5EACF4;
+}
+.presetText{
+    font-size: 2rem;
+    margin: auto;
+}
