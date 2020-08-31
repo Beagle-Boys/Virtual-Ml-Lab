@@ -16,3 +16,8 @@
   font-size: 3.7rem;
   text-align: center;
 }
+@media screen and (max-height: 800px){
+.lvlInfo{
+  top: 6vh;
+}
+}

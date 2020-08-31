@@ -10,7 +10,9 @@ import Paper from "../../components/Paper/Paper";
 import ProcessPaper from "../../components/ProcessPaper/ProcessPaper";
 import OutputPaper from "../../components/OutputPaper/OutputPaper";
 
-interface Props {}
+interface Props {
+  location: any
+}
 
 class Workspace extends React.Component<Props, {}> {
   state = {
@@ -49,7 +51,7 @@ class Workspace extends React.Component<Props, {}> {
   render() {
     return (
       <IonPage>
-        <AppBar title="VLab - New Project" menu />
+        <AppBar title={this.props.location.state[1] === "new" ? "VLab - New Project" : "VLab"} menu />
         <SideBar />
         <IonContent className={styles.content}>
           <svg className={styles.svg}>

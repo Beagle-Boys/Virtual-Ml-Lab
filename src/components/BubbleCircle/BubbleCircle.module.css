@@ -29,3 +29,10 @@ img{
   height: 150px;
   width: 150px;
 }
+
+@media screen and (max-height: 800px){
+  .bubbleCon{
+    height: 40vh;
+    width: 40vh;
+  }
+}

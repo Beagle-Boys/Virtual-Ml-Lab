@@ -7,9 +7,8 @@
     font-family: 'Prata', serif;
 }
 .startBtn{
-    --color: #ffffff;
     background-color: #5EACF4;
-    --background: #5EACF4;
+    color: white;
     width: fit-content;
     box-sizing: border-box;
     padding: 1rem;
@@ -29,6 +28,8 @@
     --background: #4f94d4;
 }
 .svgNew{
+    position: relative;
+    top: 10px;
     margin-left: 10px;
 }
 .newBtnText{
