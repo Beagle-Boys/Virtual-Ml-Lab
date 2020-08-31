@@ -6,6 +6,7 @@
     "@capacitor/core": "2.4.0",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
+    "@tensorflow-models/knn-classifier": "^1.2.2",
     "@tensorflow-models/mobilenet": "^2.0.4",
     "@tensorflow/tfjs": "^2.3.0",
     "@testing-library/jest-dom": "^4.2.4",

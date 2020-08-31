@@ -8,10 +8,12 @@ import { IonIcon, IonItem } from "@ionic/react";
 import ImageButton from "../ImageButton/ImageButton";
 import PicturesWall from "../PicturesWall/PicturesWall";
 import { UploadFile } from "antd/lib/upload/interface";
+import NeuralNetwork from "../../libs/NeuralNetwork";
 
 interface Props {
   className?: string;
   class: ImageInputClass;
+  neuralNetwork: NeuralNetwork;
   onChange?: (val: ImageInputClass) => void;
   optionClicked?: (
     option: "delete" | "disable" | "remove" | "download" | "save",
@@ -19,28 +21,6 @@ interface Props {
   ) => void;
   onRendered?: () => void;
 }
-
-const transformFile: (file: File) => Promise<Blob | null> = (file: File) => {
-  return new Promise((resolve) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      let canvas = document.createElement("canvas");
-      canvas.width = 224;
-      canvas.height = 224;
-      let img = document.createElement("img");
-      img.src = typeof reader.result === "string" ? reader.result : "";
-      img.onload = () => {
-        let ctx = canvas.getContext("2d");
-        if (ctx === null) return;
-        ctx.drawImage(img, 0, 0, 224, 224);
-        canvas.toBlob((callback) => {
-          resolve(callback);
-        });
-      };
-    };
-  });
-};
 
 const toBase64: (
   file: File | Blob
@@ -55,14 +35,23 @@ const toBase64: (
   });
 
 class WorkspaceInputCard extends React.Component<Props, {}> {
-  state: { class: ImageInputClass } = {
+  state: { class: ImageInputClass; webcam: boolean } = {
     class: this.props.class,
+    webcam: false,
   };
+  webcamELement = React.createRef<HTMLVideoElement>();
   onClassNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     let tclass = this.state.class;
     tclass.className = ev.target.value || "";
     if (this.props.onChange) return this.props.onChange(tclass);
     return this.setState({ class: tclass });
+  };
+  clickImage = () => {
+    if (this.webcamELement.current)
+      this.state.class.addImage(
+        this.webcamELement.current,
+        this.props.neuralNetwork
+      );
   };
   dropdown = (
     <>
@@ -123,11 +112,9 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
   );
   onAddImages = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let files = event.target.files;
-    let tfile = this.state.class.images;
+    let tfile = [...this.state.class.images];
     for (let i = 0; files && i < files?.length; i++) {
-      let tform = await transformFile(files[i]);
-      if (!tform) continue;
-      let url = await toBase64(tform);
+      let url = await toBase64(files[i]);
       let file: UploadFile = {
         name: files[i].name,
         uid: `${tfile.length}`,
@@ -137,10 +124,10 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
         type: files[i].type,
       };
       tfile.push(file);
-      this.state.class.images = tfile;
-      if (this.props.onChange) return this.props.onChange(this.state.class);
-      this.setState({ class: this.state.class });
     }
+    this.state.class.images = tfile;
+    if (this.props.onChange) return this.props.onChange(this.state.class);
+    this.setState({ class: this.state.class });
   };
 
   componentDidMount = () => {
@@ -159,6 +146,18 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
           type="file"
           accept="image/png, image/jpeg"
         />
+        {this.state.webcam ? (
+          <video
+            autoPlay
+            playsInline
+            muted
+            ref={this.webcamELement}
+            id="webcam"
+            onClick={this.clickImage}
+            width="224"
+            height="224"
+          ></video>
+        ) : null}
         <IonItem>
           <Input
             value={this.state.class.className}
@@ -174,7 +173,11 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
           Add Image Samples:
           <div className={styles.images}>
             <div className={styles.button}>
-              <ImageButton label="Webcam" image="webcam" />
+              <ImageButton
+                onClick={() => this.setState({ webcam: !this.state.webcam })}
+                label="Webcam"
+                image="webcam"
+              />
               <ImageButton
                 onClick={() => this.imageInputRef.current?.click()}
                 label="Upload"
@@ -184,7 +187,9 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
             <PicturesWall
               onChange={(uid) => {
                 this.setState({
-                  images: this.state.class.images.filter((img) => img.uid !== uid),
+                  images: this.state.class.images.filter(
+                    (img) => img.uid !== uid
+                  ),
                 });
               }}
               files={this.state.class.images}

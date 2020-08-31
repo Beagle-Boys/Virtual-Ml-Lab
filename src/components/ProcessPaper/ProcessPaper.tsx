@@ -48,8 +48,8 @@ class ProcessPaper extends React.Component<Props, {}> {
                       type="number"
                       min="1"
                       maxLength={4}
-                      defaultValue={50}
                       value={this.props.neuralNetwork.modelfitOptions.epochs}
+                      onChange={(ev) => this.props.neuralNetwork.modelfitOptions.epochs = parseInt(ev.target.value)}
                       className={styles.inputNumber}
                       max="9999"
                     />

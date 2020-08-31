@@ -94,6 +94,7 @@ class Workspace extends React.Component<Props, {}> {
                   }}
                   key={i}
                   class={v.backend}
+                  neuralNetwork={this.state.neuralNetwork}
                 />
               ))}
               <Paper className={styles.paper}>
