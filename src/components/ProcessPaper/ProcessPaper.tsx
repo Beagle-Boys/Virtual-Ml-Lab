@@ -5,35 +5,18 @@ import { IonButton, IonIcon } from "@ionic/react";
 import { Collapse, Tooltip } from "antd";
 import { helpCircleOutline } from "ionicons/icons";
 import NeuralNetwork from "../../libs/NeuralNetwork";
-import ImageInputClass from "../../libs/ImageInputClass";
 
 interface Props {
-  reff?: React.RefObject<HTMLDivElement>;
-  onRendered?: () => void;
   neuralNetwork: NeuralNetwork;
-  imageClasses: ImageInputClass[];
 }
 
 class ProcessPaper extends React.Component<Props, {}> {
-  componentDidUpdate() {
-    if (this.props.onRendered) return this.props.onRendered();
-  }
-  componentDidMount() {
-    if (this.props.onRendered) return this.props.onRendered();
-  }
-  onTrain = () => {
-    this.props.neuralNetwork.imageClasses = this.props.imageClasses;
-    this.props.neuralNetwork
-      .train()
-      .then(console.log)
-      .catch(console.error);
-  };
   render() {
     return (
-      <Paper reff={this.props.reff} className={styles.paper}>
+      <Paper className={styles.paper}>
         <div className={styles.section}>
           <div className={styles.label}>Training</div>
-          <IonButton onClick={this.onTrain} className={styles.button}>
+          <IonButton className={styles.button}>
             Train Model
           </IonButton>
         </div>

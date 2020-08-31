@@ -27,6 +27,7 @@ export default class NeuralNetwork {
         loss: "meanSquaredError",
         metrics: ["accuracy"],
     };
+    trained: boolean = false;
     epochs: number = 50;
     imageClasses: ImageInputClass[] = [];
     layerOptions: LayerOptions = {
@@ -53,15 +54,8 @@ export default class NeuralNetwork {
         console.log('Successfully loaded model');
         return net;
     }
-    train = async () => {
-        ;
-    }
-    addImage = (image:ImageInputClass) => {
-        ;
-    }
-    /*train = async () => {
-        let tensorListx = [];
-        let tensorListy = [];
+    train = () => {
+        if (this.net === null) return;
         for (let i = 0; i < this.imageClasses.length; i++) {
             let imageClass = this.imageClasses[i];
             for (let j = 0; j < imageClass.images.length; j++) {
@@ -69,47 +63,16 @@ export default class NeuralNetwork {
                 let imgSrc = imageClass.images[j].url;
                 if (!imgSrc) continue;
                 img.src = imgSrc;
-                let tsr = tf.browser.fromPixels(img);
-                tsr = tf.image.resizeBilinear(tsr, [224, 224]);
-                tensorListx.push(tsr);
-                tensorListy.push(tf.tensor(imageClass.number));
+                let activation = this.net.infer(img, true);
+                this.classifier.addExample(activation, imageClass.className);
+                this.trained = true;
             }
         }
-        let inputTensor = tf.stack(tensorListx);
-        console.log(JSON.parse(JSON.stringify(inputTensor)));
-        //this.model = tf.sequential()
-        this.model.add(tf.layers.conv2d({
-            inputShape: [224, 224, 3,],
-            kernelSize: 3,
-            activation: "relu6",
-            filters: 64
-        }));
-        this.model.add(tf.layers.conv2d({
-            kernelSize: 3,
-            activation: "relu6",
-            filters: 32
-        }));
-        this.model.add(tf.layers.flatten());
-        this.model.add(tf.layers.dense({
-            units: 10,
-            activation: "softmax"
-        }));
-        /*this.model.add(tf.layers.flatten({
-            inputShape: [6, 244, 244, 3]
-        }));
-        this.model.add(tf.layers.dense({
-            units: 128,
-            activation: 'relu'
-        }));
-        this.model.add(tf.layers.dense({
-            units: this.imageClasses.length
-        }));
-        this.model.compile({
-            optimizer: "adam",
-            loss: tf.losses.softmaxCrossEntropy,
-        });
-        this.model.fit(inputTensor, tensorListy, {
-            epochs: 50,
-        }).then(console.log).catch(console.error);
-    }*/
+    }
+    predict = () => {
+        ;
+    }
+    addImage = (image: ImageInputClass) => {
+        ;
+    }
 }
