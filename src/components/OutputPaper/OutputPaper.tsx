@@ -1,15 +1,16 @@
 import React from "react";
 import styles from "./OutputPaper.module.css";
 import Paper from "../Paper/Paper";
+import NeuralNetwork from "../../libs/NeuralNetwork";
 
 interface Props {
-  reff?: React.RefObject<HTMLDivElement>;
+  neuralNetwork: NeuralNetwork;
 }
 
 class OutputPaper extends React.Component<Props, {}> {
   render() {
     return (
-      <Paper reff={this.props.reff} className={styles.paper}>
+      <Paper className={styles.paper}>
         <div className={styles.section}>
           <div className={styles.label}>Preview</div>
           <button disabled>
