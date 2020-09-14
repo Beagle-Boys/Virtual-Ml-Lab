@@ -9,6 +9,8 @@ import ImageButton from "../ImageButton/ImageButton";
 import PicturesWall from "../PicturesWall/PicturesWall";
 import { UploadFile } from "antd/lib/upload/interface";
 import NeuralNetwork from "../../libs/NeuralNetwork";
+import * as tf from "@tensorflow/tfjs";
+import { WebcamIterator } from "@tensorflow/tfjs-data/dist/iterators/webcam_iterator";
 
 interface Props {
   className?: string;
@@ -21,6 +23,23 @@ interface Props {
   ) => void;
   onRendered?: () => void;
 }
+
+const toImage: (file: File) => Promise<HTMLImageElement> = (file: File) => {
+  return new Promise((resolve) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      let canvas = document.createElement("canvas");
+      canvas.width = 224;
+      canvas.height = 224;
+      let img = document.createElement("img");
+      img.src = typeof reader.result === "string" ? reader.result : "";
+      img.onload = () => {
+        resolve(img);
+      };
+    };
+  });
+};
 
 const toBase64: (
   file: File | Blob
@@ -39,7 +58,10 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
     class: this.props.class,
     webcam: false,
   };
+
   webcamELement = React.createRef<HTMLVideoElement>();
+  webcam: WebcamIterator | null = null;
+
   onClassNameChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
     let tclass = this.state.class;
     tclass.className = ev.target.value || "";
@@ -114,6 +136,7 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
     let files = event.target.files;
     let tfile = [...this.state.class.images];
     for (let i = 0; files && i < files?.length; i++) {
+      let image = await toImage(files[i]);
       let url = await toBase64(files[i]);
       let file: UploadFile = {
         name: files[i].name,
@@ -123,16 +146,25 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
         size: files[i].size,
         type: files[i].type,
       };
-      tfile.push(file);
+      tfile.push({ img: image, options: file });
+      this.state.class.uploadImage(image, this.props.neuralNetwork,file);
     }
-    this.state.class.images = tfile;
+    //this.state.class.images = tfile;
     if (this.props.onChange) return this.props.onChange(this.state.class);
-    this.setState({ class: this.state.class });
+    //this.setState({ class: this.state.class });
   };
 
   componentDidMount = () => {
+    this.props.class.onUpdated = (instance) =>
+      this.setState({ class: instance });
     if (this.props.onRendered) return this.props.onRendered();
   };
+
+  async componentDidUpdate() {
+    if (this.webcamELement.current) {
+      this.webcam = await tf.data.webcam(this.webcamELement.current);
+    }
+  }
 
   imageInputRef = React.createRef<HTMLInputElement>();
   render() {
@@ -188,11 +220,11 @@ class WorkspaceInputCard extends React.Component<Props, {}> {
               onChange={(uid) => {
                 this.setState({
                   images: this.state.class.images.filter(
-                    (img) => img.uid !== uid
+                    (img) => img.options.uid !== uid
                   ),
                 });
               }}
-              files={this.state.class.images}
+              files={this.state.class.images.map((v) => v.options)}
             />
           </div>
         </div>
