@@ -2,6 +2,11 @@
     width: 80%;
     margin: 0 auto;
 }
+.containerBlur{
+    width: 80%;
+    margin: 0 auto;
+    filter: blur(3px);
+}
 .title{
     font-size: 4.5rem;
     font-family: 'Prata', serif;
