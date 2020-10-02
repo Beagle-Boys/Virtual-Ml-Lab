@@ -2,12 +2,54 @@ import React from "react";
 import styles from "./OutputPaper.module.css";
 import Paper from "../Paper/Paper";
 import NeuralNetwork from "../../libs/NeuralNetwork";
+import * as tf from "@tensorflow/tfjs";
+import { WebcamIterator } from "@tensorflow/tfjs-data/dist/iterators/webcam_iterator";
+import ImageInputClass from "../../libs/ImageInputClass";
 
 interface Props {
   neuralNetwork: NeuralNetwork;
+  customClasses: ImageInputClass[];
 }
 
 class OutputPaper extends React.Component<Props, {}> {
+  state = {
+    prediction: "thinking",
+  };
+  webcamElement = React.createRef<HTMLVideoElement>();
+  webcam: WebcamIterator | null = null;
+  async componentDidMount() {
+    if (this.webcamElement.current) {
+      this.webcam = await tf.data.webcam(this.webcamElement.current);
+      this.run();
+    }
+  }
+  run = async () => {
+    while (this.webcam && this.props.neuralNetwork.net) {
+      if (this.props.neuralNetwork.classifier.getNumClasses() > 0) {
+        let img = await this.webcam.capture();
+
+        // Get the activation from mobilenet from the webcam.
+        let activation = this.props.neuralNetwork.net.infer(img, true);
+        // Get the most likely class and confidence from the classifier module.
+        let result = await this.props.neuralNetwork.classifier.predictClass(
+          activation
+        );
+        
+        let classes = this.props.customClasses.map((v) => v.className);
+        this.setState({
+          prediction: `
+        prediction: ${result.label}\n
+        probability: ${result.confidences[result.label]}
+      `,
+        });
+
+        // Dispose the tensor to release the memory.
+        img.dispose();
+      }
+
+      await tf.nextFrame();
+    }
+  };
   render() {
     return (
       <Paper className={styles.paper}>
@@ -35,10 +77,15 @@ class OutputPaper extends React.Component<Props, {}> {
         <div id={styles.bodycontainer}>
           <div className={`${styles.section} ${styles.noborder}`}>
             <div className={styles.inputcontainer} style={{ display: "block" }}>
-              <p style={{ fontSize: 14, color: "#5F6368", margin: 0 }}>
-                You must train a model on the left before you can preview it
-                here.
-              </p>
+              <video
+                width="224"
+                height="224"
+                autoPlay
+                ref={this.webcamElement}
+                playsInline
+                muted
+              ></video>
+              {this.state.prediction}
             </div>
           </div>
         </div>
@@ -48,3 +95,9 @@ class OutputPaper extends React.Component<Props, {}> {
 }
 
 export default OutputPaper;
+/**
+ <p style={{ fontSize: 14, color: "#5F6368", margin: 0 }}>
+                You must train a model on the left before you can preview it
+                here.
+              </p>
+ */

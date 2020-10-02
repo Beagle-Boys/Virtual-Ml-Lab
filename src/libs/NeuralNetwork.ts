@@ -60,7 +60,7 @@ export default class NeuralNetwork {
             let imageClass = this.imageClasses[i];
             for (let j = 0; j < imageClass.images.length; j++) {
                 let img = document.createElement("img");
-                let imgSrc = imageClass.images[j].url;
+                let imgSrc = imageClass.images[j].options.url;
                 if (!imgSrc) continue;
                 img.src = imgSrc;
                 let activation = this.net.infer(img, true);

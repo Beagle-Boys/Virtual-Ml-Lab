@@ -61,7 +61,10 @@ class Workspace extends React.Component<Props, {}> {
               <ProcessPaper neuralNetwork={this.state.neuralNetwork} />
             </div>
             <div className={styles.outputFlex}>
-              <OutputPaper neuralNetwork={this.state.neuralNetwork} />
+              <OutputPaper
+                customClasses={this.state.classes}
+                neuralNetwork={this.state.neuralNetwork}
+              />
             </div>
           </div>
         </IonContent>
