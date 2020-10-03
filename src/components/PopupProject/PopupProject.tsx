@@ -1,27 +1,37 @@
 import { thumbsUpOutline } from 'ionicons/icons';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './PopupProject.module.css';
+
+interface MyProps{
+    data: Array<String>
+}
 
 interface MyState{
     selected: number,
+    algo: any
 }
 
-export class PopupProject extends Component<{}, MyState> {
-    constructor(props: any){
+export class PopupProject extends Component<MyProps, MyState> {
+    constructor(props: MyProps){
         super(props);
-        this.state = {selected: 0};
+        this.state = {selected: 0, algo: null};
     }
 
     handleClick(x: number){
-        this.setState({selected: x});
+        this.setState({selected: x, algo: null});
+    }
+
+    changeAlgo(k: number){
+        this.setState({algo: k});
     }
 
     render() {
         const selector_prob = ["Classification", "Regression", "Clustering"];
         const algos = [
-            [{img: "", name: "Neural Network"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}],
-            [{img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}],
-            [{img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}, {img: "", name: "Not Available"}]
+            [{img: "neural.png", name: "Neural Network"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}],
+            [{img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"},],
+            [{img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"},]
         ];
         return (
             <div className={styles.selectorPopup}>
@@ -33,15 +43,11 @@ export class PopupProject extends Component<{}, MyState> {
                     <div className={styles.divLine}></div>
                     <div className={styles.rightCon}>
                         <div className={styles.algoSelect}>
-                            {<GridAlgos data={algos[this.state.selected]} />}
-                            <div className={styles.algoCon}>Neural Network</div>
-                            <div className={styles.algoCon}>Neural Network</div>
-                            <div className={styles.algoCon}>Neural Network</div>
-                            <div className={styles.algoCon}>Neural Network</div>
-                            <div className={styles.algoCon}>Neural Network</div>
-                            <div className={styles.algoCon}>Neural Network</div>
+                            {algos[this.state.selected].map((x,y) => <GridAlgos name={x.name} img={x.img} st={this.state.algo == y ? styles.algoConB : styles.algoCon} changeAlgo={(x) => this.changeAlgo(x)} k={y} key={y}/>)}
                         </div>
-                        <div className={styles.createBtn}>Create</div>
+                        <Link to={{pathname: "/train", state: [this.props.data, this.state]}} style={this.state.algo == null ? {pointerEvents: "none"}: {}} >
+                            <div className={this.state.algo != null ? styles.createBtn : `${styles.createBtn} ${styles.disabledBtn}`}>Create</div>
+                        </Link>
                     </div>
                 </div>
                 
@@ -65,18 +71,19 @@ function ListItemProb(props: Props){
 
 interface obj{
     name: string,
-    img: string
+    img: string,
+    k: number,
+    st: any,
+    changeAlgo: (x: number) => void
 }
 
-interface AlgoProps{
-    data: Array<obj>,
-}
 
-function GridAlgos(props: AlgoProps){
+function GridAlgos(props: obj){
     return(
-        <>
-        {props.data.map((x, y) => <div className={styles.algoCon}>{x.name}</div>)}
-        </>
+        <div className={props.name == "Not Available" ? `${styles.NotAvaAlgo} ${props.st}` : props.st} onClick={() => props.changeAlgo(props.k)}>
+            <img src={require(`../../assets/${props.img}`)} className={styles.imgIcon} alt="img"></img>
+            <div className={styles.imgText}>{props.name}</div>
+        </div>
     );
 }
 

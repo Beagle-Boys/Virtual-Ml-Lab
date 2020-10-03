@@ -4,7 +4,7 @@ import Paper from "../Paper/Paper";
 import NeuralNetwork from "../../libs/NeuralNetwork";
 import * as tf from "@tensorflow/tfjs";
 import { WebcamIterator } from "@tensorflow/tfjs-data/dist/iterators/webcam_iterator";
-import ImageInputClass from "../../libs/ImageInputClass";
+import {ImageInputClass} from "../../components/WorkspaceInputCard/WorkspaceInputCard";
 
 interface Props {
   neuralNetwork: NeuralNetwork;

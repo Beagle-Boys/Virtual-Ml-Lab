@@ -16,7 +16,7 @@ interface States {
 export class ProjectsContainer extends Component<Props, States> {
     constructor(props: Props) {
         super(props);
-        this.state = { popup: true}
+        this.state = { popup: false}
       }
     popupSelector(){
         this.setState({popup: true})
@@ -34,7 +34,7 @@ export class ProjectsContainer extends Component<Props, States> {
 
         return (
             <>
-            {this.state.popup ? <PopupProject /> : <></>}
+            {this.state.popup ? <PopupProject data={data_probe}/> : <></>}
             <div className={this.state.popup ? styles.containerBlur : styles.container} onClick={() => this.hideSelector()}>
                 <div className={styles.title}>Projects</div>
                 <div className={styles.startBtn} onClick={() => this.popupSelector()}><svg className={styles.svgNew} width="50" height="50" viewBox="0 0 63 70" fill="none" xmlns="http://www.w3.org/2000/svg">

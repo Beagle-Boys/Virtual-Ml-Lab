@@ -11,13 +11,19 @@
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
 }
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+ } 
 .selectorHide{
     display: none;
 }
 .popupTitle{
-    height: 20%;
-    margin: 20px 0px 25px 50px;
+    margin: 20px 0px 10px 50px;
     font-size: 2.5rem;
 }
 .popupSelectorContainer{
@@ -43,32 +49,89 @@
     font-size: 1.5rem;
     margin: 10px 4px 10px 4px;
     padding: 10px;
+    border-radius: 10px;
 }
 .problemCon:hover{
     background-color:  rgba(196, 196, 196, 0.8);
 }
 .algoSelect{
     display: flex;
+    width: 100%;
+    flex-grow: 1;
     flex-wrap: wrap;
-    justify-content: space-evenly;
     align-content: flex-start;
+    align-items: flex-start;
     overflow-y: scroll;
 }
+
 .algoCon{
+    display: flex;
+    flex-direction: column;
     height: 150px;
     width: 150px;
-    margin: 30px;
+    margin: 30px 35px;
     background-color: #C4C4C4;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+}
+.algoCon:hover{
+    background-color: #929191
+}
+.algoConB{
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+    width: 150px;
+    margin: 30px 35px;
+    background-color: #C4C4C4;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+.NotAvaAlgo{
+    filter: opacity(50%);
+    pointer-events: none;
 }
 .createBtn{
+    position: relative;
+    right: 50px;
     background-color: #1967D2;
     color: white;
-    height: fit-content;
-    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+    width: 145px;
     font-size: 1.5rem;
+    border-radius: 16px;
+}
+.disabledBtn{
+    filter: grayscale(100%) opacity(50%);
+    pointer-events: none;
 }
 .rightCon{
     display: flex;
+    flex-grow: 1;
     flex-direction: column;
     align-items: flex-end;
+}
+.imgIcon{
+    height: 70px;
+    width: 70px;
+}
+.imgText{
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+.algoSelect::-webkit-scrollbar{
+    width: 5px;
+}
+.algoSelect::-webkit-scrollbar-thumb{
+  background: #929191;
+  border-radius: 10px;
+}
+.algoSelect::-webkit-scrollbar-track{
+  background: transparent;
 }

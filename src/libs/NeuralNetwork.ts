@@ -1,5 +1,5 @@
 import * as tf from "@tensorflow/tfjs";
-import ImageInputClass from "./ImageInputClass";
+import {ImageInputClass} from "../components/WorkspaceInputCard/WorkspaceInputCard";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as knnClassifier from "@tensorflow-models/knn-classifier";
 
