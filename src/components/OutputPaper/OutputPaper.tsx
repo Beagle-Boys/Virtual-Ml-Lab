@@ -1,20 +1,24 @@
 import React from "react";
 import styles from "./OutputPaper.module.css";
 import Paper from "../Paper/Paper";
-import NeuralNetwork from "../../libs/NeuralNetwork";
 import * as tf from "@tensorflow/tfjs";
 import { WebcamIterator } from "@tensorflow/tfjs-data/dist/iterators/webcam_iterator";
-import ImageInputClass from "../../libs/ImageInputClass";
+import NeuralNetwork from "../../libs/NeuralNetwork";
+import * as knnClassifier from "@tensorflow-models/knn-classifier";
+import { MobileNet } from "@tensorflow-models/mobilenet";
 
 interface Props {
-  neuralNetwork: NeuralNetwork;
-  customClasses: ImageInputClass[];
+  neuralNetwork?: NeuralNetwork;
+  classifier: knnClassifier.KNNClassifier;
+  mobnet: MobileNet;
 }
 
 class OutputPaper extends React.Component<Props, {}> {
   state = {
-    prediction: "thinking",
+    prediction: "processing",
+    props: this.props
   };
+  recording = true;
   webcamElement = React.createRef<HTMLVideoElement>();
   webcam: WebcamIterator | null = null;
   async componentDidMount() {
@@ -24,18 +28,19 @@ class OutputPaper extends React.Component<Props, {}> {
     }
   }
   run = async () => {
-    while (this.webcam && this.props.neuralNetwork.net) {
-      if (this.props.neuralNetwork.classifier.getNumClasses() > 0) {
+    console.log("outside while");
+    while (this.webcam && this.props.mobnet && this.recording) {
+      if (this.props.classifier.getNumClasses() > 0) {
         let img = await this.webcam.capture();
 
         // Get the activation from mobilenet from the webcam.
-        let activation = this.props.neuralNetwork.net.infer(img, true);
+        let activation = this.props.mobnet.infer(img, true);
         // Get the most likely class and confidence from the classifier module.
-        let result = await this.props.neuralNetwork.classifier.predictClass(
+        let result = await this.props.classifier.predictClass(
           activation
         );
-        
-        let classes = this.props.customClasses.map((v) => v.className);
+
+        //let classes = this.props.customClasses.map((v) => v.className);
         this.setState({
           prediction: `
         prediction: ${result.label}\n
@@ -50,6 +55,9 @@ class OutputPaper extends React.Component<Props, {}> {
       await tf.nextFrame();
     }
   };
+  componentWillUnmount() {
+    this.recording = false;
+  }
   render() {
     return (
       <Paper className={styles.paper}>

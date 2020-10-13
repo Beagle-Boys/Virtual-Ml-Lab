@@ -1,5 +1,4 @@
 import * as tf from "@tensorflow/tfjs";
-import ImageInputClass from "./ImageInputClass";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as knnClassifier from "@tensorflow-models/knn-classifier";
 
@@ -29,7 +28,6 @@ export default class NeuralNetwork {
     };
     trained: boolean = false;
     epochs: number = 50;
-    imageClasses: ImageInputClass[] = [];
     layerOptions: LayerOptions = {
         units: 10,
         activation: "sigmoid",
@@ -54,7 +52,7 @@ export default class NeuralNetwork {
         console.log('Successfully loaded model');
         return net;
     }
-    train = () => {
+    /*train = () => {
         if (this.net === null) return;
         for (let i = 0; i < this.imageClasses.length; i++) {
             let imageClass = this.imageClasses[i];
@@ -68,11 +66,8 @@ export default class NeuralNetwork {
                 this.trained = true;
             }
         }
-    }
+    }*/
     predict = () => {
-        ;
-    }
-    addImage = (image: ImageInputClass) => {
         ;
     }
 }
