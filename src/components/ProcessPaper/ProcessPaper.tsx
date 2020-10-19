@@ -5,18 +5,60 @@ import { IonButton, IonIcon } from "@ionic/react";
 import { Collapse, Tooltip } from "antd";
 import { helpCircleOutline } from "ionicons/icons";
 import NeuralNetwork from "../../libs/NeuralNetwork";
+import { MobileNet } from "@tensorflow-models/mobilenet";
+import InputCard from "../WorkspaceInputCard/InputCard";
+import * as knnClassifier from "@tensorflow-models/knn-classifier";
 
 interface Props {
-  neuralNetwork: NeuralNetwork;
+  classes: { card: JSX.Element, ref: React.RefObject<InputCard> }[];
+  onUpdate?: () => void;
+  onTrained: (neuralNetwork: NeuralNetwork, classifier: knnClassifier.KNNClassifier, net: MobileNet | null) => void;
 }
 
 class ProcessPaper extends React.Component<Props, {}> {
+  neuralNetwork: NeuralNetwork;
+  classifier: knnClassifier.KNNClassifier;
+  state: { net: MobileNet | null, trained: boolean } = {
+    net: null,
+    trained: false
+  }
+  constructor(props: Props) {
+    super(props);
+    this.neuralNetwork = new NeuralNetwork();
+    this.neuralNetwork.app().then(net => {
+      this.setState({ net: net });
+    });
+    this.classifier = knnClassifier.create();
+  }
+  onTrain = () => {
+    for (let i = 0; i < this.props.classes.length; i++) {
+      let thisclass = this.props.classes[i].ref.current;
+      if (!thisclass) continue;
+      for (let j = 0; j < thisclass.state.images.length; j++) {
+        let canvasEl = thisclass.state.images[j];
+        let activation = this.state.net?.infer(canvasEl, true);
+        if (!activation) return;
+        this.classifier.addExample(activation, thisclass.state.objectName);
+      }
+    }
+    this.setState({ trained: true });
+    this.props.onTrained(this.neuralNetwork, this.classifier, this.state.net);
+    console.log("DONE TRAINING");
+  }
+  componentDidUpdate() {
+    if (this.props.onUpdate) {
+      this.props.onUpdate();
+    }
+  }
   render() {
     return (
       <Paper className={styles.paper}>
         <div className={styles.section}>
           <div className={styles.label}>Training</div>
-          <IonButton className={styles.button}>
+          <IonButton
+            onClick={this.onTrain}
+            disabled={this.state.net === null}
+            className={styles.button}>
             Train Model
           </IonButton>
         </div>
@@ -31,8 +73,8 @@ class ProcessPaper extends React.Component<Props, {}> {
                       type="number"
                       min="1"
                       maxLength={4}
-                      value={this.props.neuralNetwork.modelfitOptions.epochs}
-                      onChange={(ev) => this.props.neuralNetwork.modelfitOptions.epochs = parseInt(ev.target.value)}
+                      value={this.neuralNetwork.modelfitOptions.epochs}
+                      onChange={(ev) => this.neuralNetwork.modelfitOptions.epochs = parseInt(ev.target.value)}
                       className={styles.inputNumber}
                       max="9999"
                     />
@@ -75,7 +117,7 @@ class ProcessPaper extends React.Component<Props, {}> {
                   <div className={styles.inputholder}>
                     <select
                       defaultValue={
-                        this.props.neuralNetwork.layerOptions.batchSize
+                        this.neuralNetwork.layerOptions.batchSize
                       }
                     >
                       <option value={16}>16</option>

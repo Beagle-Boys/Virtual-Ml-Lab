@@ -39,3 +39,7 @@
   display: inline-block;
   flex-shrink: 0;
 }
+.scroll {
+  overflow-x: auto;
+  overflow-y: auto;
+}
