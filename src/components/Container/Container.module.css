@@ -1,3 +1,4 @@
+
 .container {
   height: fit-content;
   width: 100%;
@@ -20,4 +21,60 @@
 .lvlInfo{
   top: 6vh;
 }
+}
+.topSection{
+  box-sizing: border-box;
+  height: 45vh;
+}
+.infoTxt{
+  font-size: 3.5rem;
+}
+.strtBtn{
+  position: absolute;
+  box-sizing: border-box;
+  height: 100px;
+  width: 350px;
+  font-size: 3rem;
+  text-align: center;
+  padding: 13px;
+  bottom: 0;
+  right: 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  background-color: #78B4EC;
+  color: white;
+  cursor: pointer;
+}
+.strtBtn:hover{
+  background-color: #ec7878;
+}
+.belowSection{
+  background-color: black;
+  height: 70vh;
+  padding: 13px;
+}
+.topCon{
+  position: relative;
+  width: 80%;
+  height: 40vh;
+  margin: 2.5vh auto;
+}
+.belowCon{
+  width: 80%;
+  margin: 20px auto;
+}
+.toolTitle{
+  text-align: center;
+  font-size: 2.5rem;
+  color: white;
+}
+.algoList{
+  margin-top: 40px;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+.algoCard{
+  background-color: #C4C4C4;
+  height: 300px;
+  width: 300px;
 }

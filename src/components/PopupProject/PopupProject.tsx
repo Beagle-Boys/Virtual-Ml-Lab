@@ -30,7 +30,7 @@ export class PopupProject extends Component<MyProps, MyState> {
         const selector_prob = ["Classification", "Regression", "Clustering"];
         const algos = [
             [{img: "neural.png", name: "Neural Network"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}],
-            [{img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"},],
+            [{img: "neural.png", name: "Neural Network"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"},],
             [{img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"}, {img: "close.png", name: "Not Available"},]
         ];
         return (
