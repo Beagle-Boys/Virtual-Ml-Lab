@@ -15,11 +15,11 @@ export class Regression extends Component {
             data: [{				
                       type: "scatter",
                       dataPoints: [
-                          { label: "Apple",  y: 10  },
-                          { label: "Orange", y: 15  },
-                          { label: "Banana", y: 25  },
-                          { label: "Mango",  y: 30  },
-                          { label: "Grape",  y: 28  }
+                          { label: "Apple", x: 1, y: 10  },
+                          { label: "Orange", x: 2, y: 15  },
+                          { label: "Banana", x: 3, y: 25  },
+                          { label: "Mango", x: 4,  y: 30  },
+                          { label: "Grape", x: 5,  y: 28  }
                       ]
              }]
          }
@@ -38,7 +38,7 @@ export class Regression extends Component {
                         <div className={styles.divdiv}></div>
                         <div className={styles.outputCon}>
                                 <div className={styles.outputBox}>
-                                    <CanvasJSChart options = {options}
+                                    <CanvasJSChart className={styles.chart} options = {options}
                                         /* onRef = {ref => this.chart = ref} */
                                     />
                                 </div>

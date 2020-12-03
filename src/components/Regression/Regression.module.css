@@ -76,3 +76,8 @@
     background-color: #4f8fca;
     cursor: pointer;
 }
+.chart{
+    border: 1px solid black;
+    height: 100%;
+    width: 100%;
+}
